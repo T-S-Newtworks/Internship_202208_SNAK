@@ -1,0 +1,124 @@
+﻿@using Internship_Template.Models.Entity
+@using Internship_Template.Common
+
+@model Internship_Template.Models.VM._BaseViewModel
+
+<script>
+    function Logout(){
+        var url = location.protocol + "//" + location.host + "/Login/ExecuteLogout";
+        location.href = url;
+
+    }
+
+    function Create() {
+        var url = location.protocol + "//" + location.host + "/T_QUESTION/Index";
+        location.href = url;
+
+    }
+
+</script>
+<style>
+    .userInfo{
+        color:#fff;
+        padding-left:0.5rem;
+        padding-right:0.5rem;
+   }
+
+    .userInfoName{
+        color:#fff;
+    }
+    a.userInfoControlBtn {
+        position: relative;
+        display: block;
+        min-width: 30px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        margin: auto;
+        background-color: rgba(0,0,0,.1);
+        border-radius: 99999px;
+        font-size: 1.6rem;
+        color: #fff;
+        text-decoration: none;
+        line-height: 1;
+        transition: background-color .3s;
+    }
+
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - サンプルアプリケーション</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+</head>
+<body style="padding-top:0px;">
+    <nav class="navbar navbar-expand-lg navbar-dark sysBaseColor">
+        <div class="container-fluid">
+            <i class="navbar-brand fas fa-project-diagram" style="color:white;">
+                @Html.ActionLink("SNAK", "Index", "Home", new { area = "" }, new { @class = "navbar-brand mb-0 h1" })
+            </i>
+            @if (Session[M_SESSION.SessionKey] is T_USER || Internship_Util.GetValue<string>("debugMode") == "Admin")
+            {
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                </ul>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    @if (Model.LoginedUser != null)
+                    {
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item nav-link active userInfo">
+                            @Model.LoginedUser.FULLNAME
+                        </li>
+                        <li class="nav-item nav-link active userInfo">
+                            @{string role = Model.LoginedUser.ADMINFLG == "1" ? "管理者" : "利用者";
+                            }
+                            @role
+                        </li>
+                        <li class="nav-item nav-link active">
+                            <div id="userInfo" class="userInfo">
+                                <!-- 開閉ボタン -->
+                                <a id="userInfoControlBtn" class="userInfoControlBtn" href="~/Users/Detail?id=@Model.LoginedUser.ID">
+                                    <i class="fas fa-user-cog fa-fw userInfoControlBtnIcon"></i>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-link active">
+                            <div class="userInfo" style="cursor:pointer;">
+                                <a onclick="Create()">アンケート作成</a>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item nav-link active">
+                            <div class="userInfo" style="cursor:pointer;">
+                                <a onclick="Logout()">ログアウト</a>
+                            </div>
+                        </li>
+
+                    </ul>
+                     }
+                </div>
+                }
+            </div>
+    </nav>
+    @**<div class="container body-content">*@
+        @RenderBody()
+        <!--<hr />-->
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - マイ ASP.NET アプリケーション</p>
+            </footer>*@
+    @*</div>*@
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,280 @@
+﻿@model Internship_Template.Models.VM.質問画面
+
+@{
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/common")
+
+<script>
+    function MoveToUserList() {
+        location.href = location.protocol + "//" + location.host + "/T_QUESTION/Index";
+    }
+</script>
+
+<style>
+    .s100.avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .homeContent {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 850px;
+    }
+
+    .contentBody {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        display: flex;
+    }
+
+    .leftContent {
+        width: 65%;
+        margin-right: 1.5rem;
+    }
+
+    .rightContent {
+        width: 35%;
+    }
+
+    .vacant2 {
+        height: 2rem;
+    }
+
+    .vacant1 {
+        height: 1rem;
+    }
+
+    .card > .content-list > li {
+        padding: 10px 16px;
+    }
+
+    .content-list.members-list li {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .members-list {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding: 0 !important;
+    }
+
+    .list-item-name {
+        display: flex;
+        align-items: center;
+    }
+
+    .s60.avatar {
+        width: 60px;
+        height: 60px;
+        margin-right: 10px;
+    }
+
+    .member-controls {
+        display: flex;
+        align-items: center;
+    }
+
+    .userState {
+        margin: 5px;
+    }
+
+    .prepend-left-5 {
+        margin-left: 5px;
+    }
+
+
+    .badge-success {
+        padding: 4px 5px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        display: inline-block;
+        color: #fff;
+        background-color: #1aaa55;
+    }
+</style>
+
+<div class="homeContent">
+    <h2 style="text-align:center;">@Model.Questionaire.TITLE</h2>
+</div>
+
+@using (Html.BeginForm("Create", "T_QUESTIONAIRE", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="homeContent">
+
+        <table class="table table-bordered">
+            @*<thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                </tr>
+            </thead>*@
+            <tbody>
+                <tr>
+                    <th scope="row">性別</th>
+                    @*<td>Mark</td>*@
+                <td>
+                    <label>
+                        <input type="radio" name="gender" value="male" />男
+                    </label>
+                    <label>
+                        <input type="radio" name="gender" value="woman" />女
+                    </label>
+                </td>
+                </tr>
+                <tr>
+                    <th scope="row">年齢</th>
+                    <td>
+                        <label>
+                            <input type="radio" name="old" value="ten less" />10代以下
+                        </label>
+                        <label>
+                            <input type="radio" name="old" value="ten" />10代
+                        </label>
+                        <label>
+                            <input type="radio" name="old" value="twenty" />20代
+                        </label>
+                        <label>
+                            <input type="radio" name="old" value="thirty" />30代
+                        </label>
+                        <label>
+                            <input type="radio" name="old" value="fourty" />40代
+                        </label>
+                        <label>
+                            <input type="radio" name="old" value="fifty" />50代
+                        </label>
+                        <label>
+                            <input type="radio" name="old" value="sixty more" />60代以上
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">家族構成</th>
+                    <td>
+                        <label>
+                            <input type="radio" name="family" value="solitude" />独身
+                        </label>
+                        <label>
+                            <input type="radio" name="family" value="two" />二人家族
+                        </label>
+                        <label>
+                            <input type="radio" name="family" value="three" />三人家族
+                        </label>
+                        <label>
+                            <input type="radio" name="family" value="four" />四人家族
+                        </label>
+                        <label>
+                            <input type="radio" name="family" value="five more" />それ以上
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">住まいの地域</th>
+                    <td>
+                        <label>
+                            <input type="radio" name="live" value="HITACHI" />日立市
+                        </label>
+                        <label>
+                            <input type="radio" name="live" value="else" />その他
+                        </label>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        </div>
+
+        @Html.HiddenFor(model => model.Questionaire.ID)
+        for (int i = 0; i < Model.Qestions.Count(); i++)
+        {
+        <div class="homeContent">
+            <div class="card-header">
+                <span class="flex-project-title">
+                    <font size="5" face="MS P明朝">@Html.DisplayFor(model => model.Qestions[i].CONTENT)</font>
+                </span>
+
+            </div>
+            <ul class="content-list members-list">
+                @Html.HiddenFor(model => model.Qestions[i].ID)
+                @if (Model.Qestions[i].OPTION1 != null)
+                {
+                <li class="group_member member">
+                    <label>
+                        <input type="radio" name="Qestions[@i].OPTION" value="@Model.Qestions[i].OPTION1" />
+                        @Model.Qestions[i].OPTION1@*OPTIONの表示*@
+                    </label>
+                    @*<img src="" class="avatar s60 js-lazy-loaded" />画像を貼り付ける場所の確保*@
+
+                    @*<input type="radio" name="check" value="">@Html.DisplayFor(modelItem => item.OPTION1)*@
+                </li>
+                }
+
+                @if (Model.Qestions[i].OPTION2 != null)
+                {
+            <li class="group_member member">
+                <label>
+                    <input type="radio" name="Qestions[@i].OPTION" value="@Model.Qestions[i].OPTION2" />
+                    @Model.Qestions[i].OPTION2@*OPTIONの表示*@
+                </label>
+                @*<img src="" class="avatar s60 js-lazy-loaded" />*@
+
+            </li>
+                }
+
+                @if (Model.Qestions[i].OPTION3 != null)
+                {
+            <li class="group_member member">
+                <label>
+                    <input type="radio" name="Qestions[@i].OPTION" value="@Model.Qestions[i].OPTION3" />
+                    @Model.Qestions[i].OPTION3@*OPTIONの表示*@
+                </label>
+                @*<img src="" class="avatar s60 js-lazy-loaded" />*@
+
+            </li>
+                }
+
+                @if (Model.Qestions[i].OPTION4 != null)
+                {
+            <li class="group_member member">
+                <label>
+                    <input type="radio" name="Qestions[@i].OPTION" value="@Model.Qestions[i].OPTION4" />
+                    @Model.Qestions[i].OPTION4@*OPTIONの表示*@
+                </label>
+                @*<img src="" class="avatar s60 js-lazy-loaded" />*@
+
+            </li>
+                }
+                @if (Model.Qestions[i].OPTION5 != null)
+                {
+            <li class="group_member member">
+                <label>
+                    <input type="radio" name="Qestions[@i].OPTION" value="@Model.Qestions[i].OPTION5" />
+                    @Model.Qestions[i].OPTION5@*OPTIONの表示*@
+                </label>
+                @*<img src="" class="avatar s60 js-lazy-loaded" />*@
+
+            </li>
+                }
+            </ul>
+        </div>
+        }
+
+        <div class="buttonContent homeContent">
+                <button type="submit" class="btn btnDefault sysBaseColor profileButton">
+                    <i class="fas fa-plus">
+                        送信
+                    </i>
+                </button>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("メニュー", "../Home/Index")
+
+        </div>

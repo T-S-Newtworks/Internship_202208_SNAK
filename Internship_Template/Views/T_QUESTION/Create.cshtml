@@ -1,0 +1,96 @@
+﻿@model Internship_Template.Models.VM.質問画面
+
+@{
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/common")
+
+<h2>作成</h2>
+
+<table class="table">
+
+    @foreach (var item in Model.Qestions)
+    {
+
+        <tr>
+            <td>
+                <font size="5" face="MS P明朝">@Html.DisplayFor(modelItem => item.CONTENT)</font>
+            </td>
+        </tr>
+
+
+        if (item.OPTION1 != null)
+        {
+            <tr>
+                <td>
+                    <input type="radio" name="check" value="">@Html.DisplayFor(modelItem => item.OPTION1)
+                </td>
+            </tr>
+        }
+
+        if (item.OPTION2 != null)
+        {
+            <tr>
+                <td>
+                    <input type="radio" name="check" value="OPTION2" />@Html.DisplayFor(modelItem => item.OPTION2)
+                </td>
+            </tr>
+        }
+
+        if (item.OPTION3 != null)
+        {
+            <tr>
+                <td>
+                    <input type="radio" name="check" value="OPTION3" />@Html.DisplayFor(modelItem => item.OPTION3)
+                </td>
+            </tr>
+        }
+
+        if (item.OPTION4 != null)
+        {
+            <tr>
+                <td>
+                    <input type="radio" name="check" value="OPTION4" />@Html.DisplayFor(modelItem => item.OPTION4)
+                </td>
+            </tr>
+        }
+
+        if (item.OPTION5 != null)
+        {
+            <tr>
+
+                <td>
+                    <input type="radio" name="check" value="OPTION5" />@Html.DisplayFor(modelItem => item.OPTION5)
+                </td>
+
+            </tr>
+        }
+
+        @*<tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+
+            </tr>*@
+
+    }
+
+</table>
+
+@using (Html.BeginForm())   //エラー
+{
+    @Html.AntiForgeryToken()
+    <div class="form-check">
+        <div class="form-horizontal">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+ }
+
+<div>
+    @Html.ActionLink("メニュー", "Index")
+</div>

@@ -1,0 +1,126 @@
+﻿@model  Internship_Template.Models.VM.ログイン画面
+@{
+    ViewBag.Title = "Index";
+}
+
+@Styles.Render("~/Content/common")
+
+<script>
+    function InputDisableCheck() {
+        //必須属性が入っている要素のvalidationを無効化
+        $('[data-val-required]').each(function (index, element) {
+            $(element).rules('remove', "required");
+        })
+
+        //入力形式属性が入っている要素のvalidationを無効化
+        $('[data-val-regex]').each(function (index, element) {
+            $(element).rules('remove', "regex");
+        })
+
+        //最大文字数属性が入っている要素のvalidationを無効化
+        $('[data-val-maxlength]').each(function (index, element) {
+            $(element).rules('remove', "maxlength");
+        })
+
+        //最大文字数属性が入っている要素のvalidationを無効化(date-val-length)
+        $('[data-val-length]').each(function (index, element) {
+            $(element).rules('remove', "maxlength");
+        })
+
+        $('#LoginForm').submit();
+    }
+</script>
+
+<style>
+
+    .main {
+        display: flex;
+        height: 100%;
+    }
+
+    .loginForm {
+        min-width: 560px;
+        min-height: 315px;
+        margin: auto;
+    }
+
+    .loginFormTitle {
+        /*margin: 10px;*/
+    }
+
+    div.login-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+</style>
+
+@*ログインのトップ画面です。*@
+<div class="main">
+    <div class="form loginForm">
+        <div class="loginFormTitle">
+            <h2 style="text-align:center; background-color:cornflowerblue">
+                ログイン<asp:EntityDataSource runat="server"></asp:EntityDataSource>
+            </h2>
+            <p>
+                ※日立市民の方は市民ID,パスワードを入力してログインしてください。
+            </p>
+
+            @if (Model.Messages.TryGetValue("Logout", out var value))
+            {
+                @Html.Label(Model.Messages["Logout"], htmlAttributes: new { @style = "width:100%; margin-right:5%; margin-left:5%;" })
+            }
+        </div>
+        @using (@Html.BeginForm("ExecuteLogin", "Login", FormMethod.Post, new { id="LoginForm" }))
+        {
+            <div class="simin">
+
+                <div class="login-item">
+                    <label>
+                        @Html.RadioButtonFor(model => model.Login.logintype, 1, new { @checked = "checked" })<label>日立市民の方&nbsp;&nbsp;</label>
+                        @*<input type="radio" id="hitachi" name="logintype" value="1" />　日立市民の方*@
+                        @*@if()*@
+
+                    </label>
+
+                    @Html.TextBoxFor(model => model.Login.ID, htmlAttributes: new { @class = "form-style", @placeholder = "市民ID" })
+                    @Html.ValidationMessageFor(model => model.Login.ID, "", new { @id = "requiredId" })
+
+                </div>
+                <div class="login-item">
+                    @Html.PasswordFor(model => model.Login.PASSWORD, htmlAttributes: new { @class = "form-style", @placeholder = "PASSWORD" })
+                    @Html.ValidationMessageFor(model => model.Login.PASSWORD, "", new { @id = "requiredPassword" })
+                    @Html.ValidationMessage("LoginError", htmlAttributes: new { @style = "color:#F5053D;" })
+                    <p>
+                        <a href="javaScript:void(0)" onclick="alert('この機能は未実装です')">
+                            パスワードを忘れた場合はこちら
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div class="login-item">
+                    <label>
+                        @Html.RadioButtonFor(model => model.Login.logintype, 0)<label>匿名の方&nbsp;&nbsp;</label>
+
+                    </label>
+
+                </div>
+            </div>
+
+            <div class="login-item">
+                <div>
+                    <input type="button" class=" login pull-right" value="ログイン" onclick="InputDisableCheck();" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

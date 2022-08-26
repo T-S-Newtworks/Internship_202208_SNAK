@@ -1,0 +1,74 @@
+﻿@model Internship_Template.Models.Entity.T_QUESTION
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>T_QUESTION</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.QUESTIONNAIREID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QUESTIONNAIREID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTENT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTENT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OPTION1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OPTION1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OPTION2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OPTION2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OPTION3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OPTION3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OPTION4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OPTION4)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OPTION5)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OPTION5)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

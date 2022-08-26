@@ -1,0 +1,216 @@
+﻿@model Internship_Template.Models.VM.TOP画面
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@Styles.Render("~/Content/common")
+
+<script>
+    /**
+     * 未実装ボタンクリック時
+     * */
+    function unimplemented() {
+        alert("この機能は未実装です。");
+        return;
+    }
+    /**
+     * ユーザー一覧画面遷移
+     * */
+    function MoveToUserList() {
+        location.href = location.protocol + "//" + location.host + "/Users/Index";
+    }
+
+</script>
+
+<style>
+    .s100.avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .homeContent {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 850px;
+    }
+
+    .contentBody {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        display: flex;
+    }
+
+    .SK{
+        display:flex;
+        flex-direction:row;
+    }
+    .SKgb {
+        height: 10vw;
+        border: solid 1px #000000;
+        width: 50vw;
+        top: 3vw;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        overflow-y: scroll;
+    }
+
+    .Ank {
+        height: 10vw;
+        border: solid 1px #000000;
+        width: 70vw;
+        top: 3vw;
+        background-color: #ffffff;
+        box-sizing: border-box;
+        overflow-y: scroll;
+    }
+    .leftContent {
+        width: 100%;
+        /*margin-right: 1.5rem;*/
+    }
+
+    .rightContent {
+        width: 0%;
+    }
+
+    .vacant2 {
+        height: 2rem;
+    }
+
+    .vacant1 {
+        height: 1rem;
+    }
+</style>
+
+<div class="main">
+
+    <div id="content" class="homeContent mb-3">
+        <div class="card">
+            <div class="card-body" style="width:max-content;">
+                <div class="container px-4 px-md-3">
+                    <div class="column">
+                        <h1 class="MenuTitle">メニュー</h1>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contentBody">
+            <div class="leftContent">
+                <div class="card">
+                    <div class="card-body" style="width:fit-content;">
+                        <h1 class="MenuTitle">市民の声</h1>
+                        @using (@Html.BeginForm("Regist", "Home", FormMethod.Post))
+                                {
+                            <div class="SK">
+                                @Html.TextBoxFor(model => model.InputOpinions.TEXT, htmlAttributes: new { @class = "form-style" })
+                                <input type="submit" value="送信" style="margin-left:20px" />
+                            </div>
+                        }
+                        <div class="Skgb">
+
+                            <ul class="content-list members-list">
+                                @if (Model.Opinions.Any())
+                                {
+                                    foreach (var member in Model.Opinions)
+                                    {
+                                <li class="group_member member">
+                                    <span class="list-item-name" >
+                                        @*@{
+                                            string userRole = member.ADMINFLG == "1" ? "(管理者)" : "(利用者)";
+                                            <span class="member-access-text userState">@userRole</span>
+                                        }*@
+
+                                        <div class="controls member-controls">
+                                            @*@Html.ActionLink(member.TEXT, "Detail", new { id = member.ID }, new { @style = "color:#000000 !important;", @class = "userState" })*@
+                                            <lable class="userState" style="color: #000000 !important;">@member.TEXT</lable>
+                                                <button class="btn deleteBtn" id="deleteBtn" onclick="MoveToDeleteUser(this)" value="@member.ID">
+                                                    <div>
+                                                        👍
+                                                    </div>
+                                                </button>
+
+                                                <button class="btn deleteBtn" id="deleteBtn" onclick="MoveToDeleteUser(this)" value="@member.ID">
+                                                    <div>
+                                                        👎
+                                                    </div>
+
+                                                </button>
+                                            
+                                        </div>
+
+                                    </span>
+
+                                </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="card">
+                        </div>
+                        <div class="vacant2"></div>
+                        <div class="row" style="width:inherit;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*copy*@
+        <div class="contentBody">
+            <div class="leftContent">
+                <div class="card">
+                    <div class="card-body" style="width:fit-content;">
+                        <h1 class="MenuTitle">アンケート一覧</h1>
+                        <div class="Ank">
+                            <table class="table table-bordered" style=" font-size:16px;"  >
+                                @if (Model.Questionnaire.Any())
+                                {
+                                    foreach (var ank in Model.Questionnaire)
+                                    {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(ank.TITLE, "../T_QUESTIONAiRE/Create", new { id = ank.ID }, new { @style = "color:#000000 !important;", @class = "userState" })
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink(ank.GENRE, "../T_QUESTIONAiRE/Create", new { id = ank.ID }, new { @style = "color:#000000 !important;", @class = "userState" })
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink(ank.DisplayTimeLimit(), "../T_QUESTIONAiRE/Create", new { id = ank.ID }, new { @style = "color:#000000 !important;", @class = "userState" })
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink(ank.ANSWER, "../T_QUESTIONAiRE/Create", new { id = ank.ID }, new { @style = "color:#000000 !important;", @class = "userState" })
+                                    </td>
+
+                                </tr>
+                                    }
+                                }
+                            </table>
+
+                        </div>
+                        <div class="vacant2"></div>
+                        <div class="row" style="width:inherit;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        @*</div>*@
+
+
+        <p>
+            @Html.ActionLink("質問画面", "../T_QUESTION/Index")
+        </p>
+    </div>
+
+
+</div>
